@@ -1,70 +1,67 @@
-/*
-    This is a little C++ prog to generate prime numbers less than an input number.
-
-    Usage: ./generate_primes.exe 
-    Usage: ./generate_primes.exe <target>
-
-    If no argument specified, it will prompt for an integer input.
-    If an integer is given in the command line it will print out the prime numbers less than that input.
+/* This little program will print the first N consecutive prime numbers
+    where N is specified as a command line argument.
 */
-
 #include <iostream>
-#include <cmath>
+#include <fstream>
+#include <string>
 #include <vector>
+#include <cmath>
 
+void print_primes(int range);
+bool is_prime(int num);
+void read_primes_file();
+void generate_prime_list(std::vector<int> &list);
 
-bool is_prime(int num_to_check);
-void generate_primes_vector(std::vector<bool> &primes, int target);
-void print_primes_vector(const std::vector<bool> &primes);
-
-int main(int argc, char *argv[]) {
-    std::vector<bool> primes;
-    int target = 0;
-    if (argc == 2) {
-        target = atoi(argv[1]);
-    } else if (argc == 1) {
-        // run prompt
-        std::cout << "Enter integer to see prime numbers less than that number:\n>";
-        std::cin >> target;
-    } else {
-        // invalid input
-        std::cout << "Invalid input. Program takes 0 or 1 integer arguments.\n";
-    }
-    generate_primes_vector(primes, target);
-    print_primes_vector(primes);
-
-    return 0;
+int main(int argc, char *argv[])
+{
+    std::vector<int> primes_list;
+    int target = atoi(argv[1]);
+    // generate_prime_list(primes_list, target);
+    std::cout << is_prime(11) << " " << is_prime(24) << "\n";
 }
-
-void generate_primes_vector(std::vector<bool> &primes, int target) {
-    primes.push_back(0); // for the 0 index
-    primes.push_back(0); // for the 1 index
-    primes.push_back(1); // first prime is at 2 index
-    primes.push_back(1); // prime at index 3
-    for (int i = 4; i < target; i++) { 
-        if (is_prime(i)) {
-            primes.push_back(1);
-        } else {
-            primes.push_back(0);
-        }
-    }
-}
-
-bool is_prime(int num_to_check) {
-    int counter = 2;
-    while (counter <= sqrt(num_to_check)) {
-        if (num_to_check % counter == 0) {
+bool is_prime(int num)
+{
+    int idx = 2;
+    while (idx < sqrt(num)) {
+        if (num % idx == 0) {
             return false;
         }
-        counter++;
+        idx++;
     }
     return true;
 }
 
-void print_primes_vector(const std::vector<bool> &primes) {
-    for (int i = 0; i < primes.size(); i++) {
-        if (primes[i] == 1) {
-            std::cout << i << " ";
+void generate_prime_list(std::vector<int> &list, int target) {
+    int count = 0;
+
+    while (count < target) {
+            
+    }
+}
+
+
+
+void read_primes_file() {
+    std::ifstream in_file("primes.txt");
+    if (!in_file) {
+        std::cerr << "Could not open primes.txt.\n";
+    }
+    while(in_file) {
+        std::string line;
+        std::getline(in_file, line);
+        std::cout << "asdasd/ " << line << " /adasd\n";
+    }
+}
+
+
+void print_primes(int range)
+{
+    for (int i = 0; i < range; i++)
+    {
+        if (is_prime(i))
+        {
+            std::cout << i << "\n";
         }
     }
 }
+
